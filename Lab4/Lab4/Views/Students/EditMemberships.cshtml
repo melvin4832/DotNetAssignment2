@@ -1,0 +1,40 @@
+﻿@model Lab4.ViewModels.StudentMembershipViewModel
+
+@{ ViewData["Title"] = "Edit Memberships"; }
+
+<h1>Edit Memberships</h1>
+
+<div>
+    <h4>Student</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            <b>Full Name</b>
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Student.FullName
+        </dd>
+    </dl>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <table id="membershipsTable">
+            @foreach (var community in Model.Communities)
+            {
+<tr>
+    <td>@community.Title</td>
+    <td>
+        @if (Model.Student.Membership.Any(m => m.CommunityId == community.Id))
+        {
+@Html.ActionLink("Unregister", "RemoveMemberships", "Students", new { studentId = Model.Student.Id, communityId = community.Id }) }
+else
+{
+@Html.ActionLink("Register", "AddMemberships", "Students", new { studentId = Model.Student.Id, communityId = community.Id })}
+    </td>
+</tr>}
+        </table>
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
